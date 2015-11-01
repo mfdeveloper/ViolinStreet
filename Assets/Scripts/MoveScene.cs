@@ -16,7 +16,7 @@ public class MoveScene : MonoBehaviour {
 	void Update () {
 		Transform t = transform;
 		if (collision != null) {
-			t = collision.transform;
+			t = collision;
 		}
 
 		x = t.position.x;
