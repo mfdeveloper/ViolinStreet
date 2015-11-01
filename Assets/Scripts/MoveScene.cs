@@ -4,6 +4,7 @@ using System.Collections;
 public class MoveScene : MonoBehaviour {
 
 	public float speed;
+	public Transform collision;
 	private float x;
 
 	// Use this for initialization
@@ -13,9 +14,15 @@ public class MoveScene : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		x = transform.position.x;
+		Transform t = transform;
+		if (collision != null) {
+			t = collision.transform;
+		}
+
+		x = t.position.x;
 		x += speed * Time.deltaTime;
 
-		transform.position = new Vector3 (x, transform.position.y, transform.position.z);
+		t.position = new Vector3 (x, t.position.y, t.position.z);
+
 	}
 }
