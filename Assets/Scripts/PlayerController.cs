@@ -23,13 +23,6 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (enableJump) {
-			if (Input.GetButtonDown ("Jump") && grounded) {
-				playerRigid.AddForce (new Vector2 (50, forceJump));
-				enableJump = false;
-			}
-		}
-
 		grounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, whatIsGround);
 
 		playerAnimator.SetBool("jump", !grounded);
@@ -39,6 +32,19 @@ public class PlayerController : MonoBehaviour {
 	void OnTriggerEnter2D(){
 
 		enableJump = true;
-		//Debug.Log ("Pulaaa");
+
+	}
+
+	public void JumpTouch() {
+		Jump ();
+	}
+
+	private void Jump() {
+
+		if (enableJump && grounded) {
+			playerRigid.AddForce (new Vector2 (50, forceJump));
+			enableJump = false;
+		}
+
 	}
 }
