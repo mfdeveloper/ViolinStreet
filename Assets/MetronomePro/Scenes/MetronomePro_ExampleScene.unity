@@ -437,6 +437,62 @@ PrefabInstance:
       propertyPath: m_Name
       value: Metronome Pro UI
       objectReference: {fileID: 0}
+    - target: {fileID: 1311173681186920, guid: 7c8b053fff72f7c4dbec7eca2a6959e1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1634849261216250, guid: 7c8b053fff72f7c4dbec7eca2a6959e1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1653559470928346, guid: 7c8b053fff72f7c4dbec7eca2a6959e1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1915353895335676, guid: 7c8b053fff72f7c4dbec7eca2a6959e1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114052137994997970, guid: 7c8b053fff72f7c4dbec7eca2a6959e1,
+        type: 3}
+      propertyPath: songClip
+      value: 
+      objectReference: {fileID: 8300000, guid: e6d4461484df37149aefdef1bd28dd47, type: 3}
+    - target: {fileID: 114052137994997970, guid: 7c8b053fff72f7c4dbec7eca2a6959e1,
+        type: 3}
+      propertyPath: Step
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114052137994997970, guid: 7c8b053fff72f7c4dbec7eca2a6959e1,
+        type: 3}
+      propertyPath: Bpm
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 114052137994997970, guid: 7c8b053fff72f7c4dbec7eca2a6959e1,
+        type: 3}
+      propertyPath: OffsetMS
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114052137994997970, guid: 7c8b053fff72f7c4dbec7eca2a6959e1,
+        type: 3}
+      propertyPath: songName
+      value: Violin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114052137994997970, guid: 7c8b053fff72f7c4dbec7eca2a6959e1,
+        type: 3}
+      propertyPath: songArtist
+      value: Tharcisio Vhaz
+      objectReference: {fileID: 0}
+    - target: {fileID: 114052137994997970, guid: 7c8b053fff72f7c4dbec7eca2a6959e1,
+        type: 3}
+      propertyPath: Base
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114052137994997970, guid: 7c8b053fff72f7c4dbec7eca2a6959e1,
+        type: 3}
+      propertyPath: active
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 114211060059180530, guid: 7c8b053fff72f7c4dbec7eca2a6959e1,
         type: 3}
       propertyPath: metronomeAudioSource
@@ -452,6 +508,21 @@ PrefabInstance:
       propertyPath: OffsetInputField
       value: 
       objectReference: {fileID: 1617250687}
+    - target: {fileID: 114211060059180530, guid: 7c8b053fff72f7c4dbec7eca2a6959e1,
+        type: 3}
+      propertyPath: metronomeVolume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114211060059180530, guid: 7c8b053fff72f7c4dbec7eca2a6959e1,
+        type: 3}
+      propertyPath: mute
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114522538772384034, guid: 7c8b053fff72f7c4dbec7eca2a6959e1,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 224013175279544064, guid: 7c8b053fff72f7c4dbec7eca2a6959e1,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -866,6 +937,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d199490a83bb2b844b9695cbf13b01ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &905188283 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1915353895335676, guid: 7c8b053fff72f7c4dbec7eca2a6959e1,
+    type: 3}
+  m_PrefabInstance: {fileID: 607512006}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &905188285 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114052137994997970, guid: 7c8b053fff72f7c4dbec7eca2a6959e1,
+    type: 3}
+  m_PrefabInstance: {fileID: 607512006}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905188283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7a6032cad6dd6c4684bffddec9d5c2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1617250687 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114769603119386230, guid: dd4a53a877fb29641951dd9b54a8d415,
@@ -954,14 +1043,59 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114491239269213866, guid: dd4a53a877fb29641951dd9b54a8d415,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114491239269213866, guid: dd4a53a877fb29641951dd9b54a8d415,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1876639268}
+      objectReference: {fileID: 2143822522}
+    - target: {fileID: 114491239269213866, guid: dd4a53a877fb29641951dd9b54a8d415,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114491239269213866, guid: dd4a53a877fb29641951dd9b54a8d415,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114491239269213866, guid: dd4a53a877fb29641951dd9b54a8d415,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114491239269213866, guid: dd4a53a877fb29641951dd9b54a8d415,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 114582033779511420, guid: dd4a53a877fb29641951dd9b54a8d415,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1876639268}
+    - target: {fileID: 114756870330387748, guid: dd4a53a877fb29641951dd9b54a8d415,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114756870330387748, guid: dd4a53a877fb29641951dd9b54a8d415,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114756870330387748, guid: dd4a53a877fb29641951dd9b54a8d415,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114756870330387748, guid: dd4a53a877fb29641951dd9b54a8d415,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 905188283}
     - target: {fileID: 224090545682894466, guid: dd4a53a877fb29641951dd9b54a8d415,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -1100,3 +1234,23 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 2035533938}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2143822522 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1299507166793242, guid: dd4a53a877fb29641951dd9b54a8d415,
+    type: 3}
+  m_PrefabInstance: {fileID: 2035533938}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2143822523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2143822522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fcf552caa969274ba4800ac20027403, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  metronomePlayer: {fileID: 905188285}
+  metronomePro: {fileID: 1876639268}

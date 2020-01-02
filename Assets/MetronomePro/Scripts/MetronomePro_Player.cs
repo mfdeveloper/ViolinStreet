@@ -1,4 +1,4 @@
-// Created by Carlos Arturo Rodriguez Silva (Legend)
+﻿// Created by Carlos Arturo Rodriguez Silva (Legend)
 
 using UnityEngine;
 using UnityEngine.UI;
@@ -90,6 +90,11 @@ public class MetronomePro_Player : MonoBehaviour {
 			songAudioSource.pitch = 1;
 		}
 	}
+
+	public void SetNewBPM(double bpm)
+    {
+		this.Bpm = bpm;
+    }
 
 	// Sets a New Song Position if the user clicked on Song Player Slider
 	public void SetNewSongPosition () {

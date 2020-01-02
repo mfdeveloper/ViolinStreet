@@ -1,22 +1,30 @@
-// Created by Carlos Arturo Rodriguez Silva (Legend)
+﻿// Created by Carlos Arturo Rodriguez Silva (Legend)
 
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Runtime.InteropServices;
+using UnityEngine.Events;
 
 public class MetronomePro : MonoBehaviour {
+
+	[Serializable]
+	public class BeatEvent : UnityEvent<int, MetronomePro> {}
 	
 	[Header("Variables")]
 	public bool active = false;
+	[Tooltip("Plays the song and metronome when the game starts")]
+	public bool autoPlay = true;
 
 	[Space(5)]
 
 	public AudioSource metronomeAudioSource;
 	public AudioClip highClip;
 	public AudioClip lowClip;
+
+	[Range(0.0f, 1.0f)]
+	public float metronomeVolume = 1f;
 
 	[Space(5)]
 
@@ -48,19 +56,76 @@ public class MetronomePro : MonoBehaviour {
 	public int CurrentStep = 0;
 	public int CurrentTick;
 
-	public List<Double> songTickTimes;
+	public List<double> songTickTimes;
 
 	double interval;
 
 	public bool neverPlayed = true;
 
-	void Start () {
+	[Header("Events")]
+	[Tooltip("Register events to call on each beat/step of the music")]
+	public BeatEvent OnBeat = new BeatEvent();
+
+	protected MetronomePro_Player metronomePlayer;
+
+	void Awake() {
+		metronomePlayer = GetComponentInChildren<MetronomePro_Player>();
+	}
+
+	void Start() {
 		imgBeat1.color = Color.gray;
 		imgBeat2.color = Color.gray;
 		imgBeat3.color = Color.gray;
 		imgBeat4.color = Color.gray;
 		txtBPM.text = "BPM: " + Bpm.ToString("F");
 		txtState.text = "";
+
+		if (autoPlay || metronomeAudioSource.playOnAwake || songAudioSource.playOnAwake)
+		{
+			metronomePlayer?.PlayOrPauseSong();
+		}
+
+		ShowOrHidePlayer();
+	}
+
+	void Update () {
+
+		if (!metronomeVolume.Equals(metronomeAudioSource.volume))
+		{
+			metronomeAudioSource.volume = metronomeVolume;
+		}
+	}
+
+	/// <summary>
+	/// Show the Metronome/Music player, only for development and debugging
+	/// </summary>
+	/// <param name="enable">Enable/Disable the player UI</param>
+	public virtual void ShowOrHidePlayer(bool enable = true) {
+
+		#if UNITY_EDITOR || DEVELOPMENT_BUILD
+			enable = true;
+		#else
+			enable = false;
+		#endif
+
+		Image bgPlayer = metronomePlayer?.GetComponent<Image>();
+		var uiChild = metronomePlayer.transform.GetChild(0);
+		var content = uiChild?.GetChild(0);
+
+		var myIndex = transform.GetSiblingIndex();
+		var bpmAndOffset = transform.parent.GetChild(myIndex - 1);
+
+		bgPlayer.enabled = enable;
+
+		if (content != null)
+		{
+			content.gameObject.SetActive(enable);
+		}
+
+		if (bpmAndOffset != null)
+		{
+			bpmAndOffset.gameObject.SetActive(enable);
+		}
 	}
 
 	public void GetSongData (double _bpm, double _offsetMS, int _base, int _step) {
@@ -242,7 +307,9 @@ public class MetronomePro : MonoBehaviour {
 	IEnumerator OnTick () {
 
 		// Play Audio Tick
-		metronomeAudioSource.Play ();
+		#if UNITY_EDITOR || DEVELOPMENT_BUILD
+			metronomeAudioSource.Play ();
+		#endif
 
 		// Change all colors in the UI to gray
 		imgBeat1.color = Color.gray;
@@ -263,7 +330,7 @@ public class MetronomePro : MonoBehaviour {
 
 
 		// YOUR FUNCTIONS HERE
-
+		OnBeat.Invoke(CurrentStep, this);
 		// Example 1
 		/*
 		if (CurrentTick == 100) {
@@ -274,7 +341,9 @@ public class MetronomePro : MonoBehaviour {
 		// Example 2
 		// FindObjectOfType<MyAwesomeScript> ().MyFunction ();
 
-		Debug.Log ("Current Step: " + CurrentStep + "/" + Step);
+		#if UNITY_EDITOR || DEVELOPMENT_BUILD
+			Debug.Log ("Current Step: " + CurrentStep + "/" + Step);
+		#endif
 		yield return null;
 	}
 }
