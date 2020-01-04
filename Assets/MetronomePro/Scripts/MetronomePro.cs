@@ -10,12 +10,13 @@ using UnityEngine.Events;
 public class MetronomePro : MonoBehaviour {
 
 	[Serializable]
-	public class BeatEvent : UnityEvent<int, MetronomePro> {}
+	public class MetronomeEvent : UnityEvent<MetronomePro, MetronomePro_Player> {}
 	
 	[Header("Variables")]
 	public bool active = false;
 	[Tooltip("Plays the song and metronome when the game starts")]
 	public bool autoPlay = true;
+	public bool hideInputFields = false;
 
 	[Space(5)]
 
@@ -64,12 +65,16 @@ public class MetronomePro : MonoBehaviour {
 
 	[Header("Events")]
 	[Tooltip("Register events to call on each beat/step of the music")]
-	public BeatEvent OnBeat = new BeatEvent();
+	public MetronomeEvent OnBeat = new MetronomeEvent();
+	public MetronomeEvent OnPlay = new MetronomeEvent();
+	public MetronomeEvent OnPause = new MetronomeEvent();
+	public MetronomeEvent OnStop = new MetronomeEvent();
 
 	protected MetronomePro_Player metronomePlayer;
 
 	void Awake() {
 		metronomePlayer = GetComponentInChildren<MetronomePro_Player>();
+		metronomePlayer.MetronomeParent = this;
 	}
 
 	void Start() {
@@ -124,8 +129,10 @@ public class MetronomePro : MonoBehaviour {
 
 		if (bpmAndOffset != null)
 		{
-			bpmAndOffset.gameObject.SetActive(enable);
+			bpmAndOffset.gameObject.SetActive(hideInputFields ? false : enable);
 		}
+
+		txtState.gameObject.SetActive(enable);
 	}
 
 	public void GetSongData (double _bpm, double _offsetMS, int _base, int _step) {
@@ -178,7 +185,6 @@ public class MetronomePro : MonoBehaviour {
 			isPlaying = true;
 		}
 
-
 		songAudioSource.Pause ();
 
 		CalculateIntervals ();
@@ -197,11 +203,15 @@ public class MetronomePro : MonoBehaviour {
 
 		neverPlayed = false;
 		active = true;
+
+		OnPlay.Invoke(this, metronomePlayer);
 	}
 
 	// Pause Metronome
 	public void Pause () {
 		active = false;
+
+		OnPause.Invoke(this, metronomePlayer);
 	}
 
 	// Stop Metronome
@@ -211,6 +221,8 @@ public class MetronomePro : MonoBehaviour {
 		CurrentMeasure = 0;
 		CurrentStep = 4;
 		CurrentTick = 0;
+
+		OnStop.Invoke(this, metronomePlayer);
 	}
 
 	// Calculate Time Intervals for the song
@@ -329,8 +341,9 @@ public class MetronomePro : MonoBehaviour {
 		}
 
 
-		// YOUR FUNCTIONS HERE
-		OnBeat.Invoke(CurrentStep, this);
+		// YOUR FUNCTIONS HERE (try add callbacks to "OnBeat" event)
+		OnBeat.Invoke(this, metronomePlayer);
+
 		// Example 1
 		/*
 		if (CurrentTick == 100) {

@@ -2,8 +2,8 @@
 
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 using System;
+using Diagnostics = System.Diagnostics;
 
 public class MetronomePro_Player : MonoBehaviour {
 
@@ -23,6 +23,7 @@ public class MetronomePro_Player : MonoBehaviour {
 	public Text songTotalDuration;
 	public Image playAndPauseButton;
 	public Image songPlayerBar;
+	public Image iconMusicPlayer;
 	public Dropdown velocityScale;
 	public Slider songPlayerSlider;
 
@@ -42,6 +43,25 @@ public class MetronomePro_Player : MonoBehaviour {
 
 	float amount;
 
+	/// <summary>
+	/// Get a MetronomePro script, to avoid call "FindObjectOfType()" many times
+	/// </summary>
+	public MetronomePro MetronomeParent 
+	{
+		get
+		{
+			_metronomePro = _metronomePro != null ? _metronomePro : FindObjectOfType<MetronomePro>();
+			return _metronomePro;
+		}
+		set
+		{
+			_metronomePro = value;
+		}
+	}
+
+	private MetronomePro _metronomePro;
+
+
 	void Start () {
 
 		// Assign the clip to the AudioSource
@@ -56,11 +76,23 @@ public class MetronomePro_Player : MonoBehaviour {
 
 		// Send Song Data to Metronome
 		SendSongData();
+
+		MobileElements();
 	}
 
+	[Diagnostics.Conditional("UNITY_ANDROID"), Diagnostics.Conditional("UNTY_IOS")]
+	public virtual void MobileElements()
+	{
+		txtSongName.gameObject.SetActive(false);
+
+		if (iconMusicPlayer != null)
+		{
+			iconMusicPlayer.gameObject.SetActive(false);
+		}
+	}
 	// Sends Song Data to Metronome Pro script
 	public void SendSongData () {
-		FindObjectOfType<MetronomePro> ().GetSongData (Bpm, OffsetMS, Base, Step);
+		MetronomeParent.GetSongData (Bpm, OffsetMS, Base, Step);
 	}
 
 	// Set New Song Name and Artist
@@ -105,11 +137,11 @@ public class MetronomePro_Player : MonoBehaviour {
 			StopSong ();
 		}
 
-		if (FindObjectOfType<MetronomePro> ().neverPlayed) {
-			FindObjectOfType<MetronomePro> ().CalculateIntervals ();
+		if (MetronomeParent.neverPlayed) {
+			MetronomeParent.CalculateIntervals ();
 		}
 
-		FindObjectOfType<MetronomePro> ().CalculateActualStep ();
+		MetronomeParent.CalculateActualStep ();
 
 		actualPosition.text = UtilityMethods.FromSecondsToMinutesAndSeconds (songAudioSource.time);
 
@@ -122,7 +154,7 @@ public class MetronomePro_Player : MonoBehaviour {
 		try {
 		songTotalDuration.text = UtilityMethods.FromSecondsToMinutesAndSeconds (songAudioSource.clip.length);
 		} catch {
-			FindObjectOfType<MetronomePro>().txtState.text = "Please assign an Audio Clip to the Player!";
+			MetronomeParent.txtState.text = "Please assign an Audio Clip to the Player!";
 			Debug.LogWarning ("Please assign an Audio Clip to the Player!");
 		}
 	}
@@ -135,12 +167,12 @@ public class MetronomePro_Player : MonoBehaviour {
 			active = false;
 			playing = false;
 			songAudioSource.Pause ();
-			FindObjectOfType<MetronomePro> ().Pause ();
+			MetronomeParent.Pause ();
 			playAndPauseButton.sprite = playSprite;
 
 		} else {
 			songAudioSource.Play ();
-			FindObjectOfType<MetronomePro> ().Play ();
+			MetronomeParent.Play ();
 			Debug.Log ("Song Playing");
 			playAndPauseButton.sprite = pauseSprite;
 			playing = true;
@@ -164,7 +196,7 @@ public class MetronomePro_Player : MonoBehaviour {
 		songPlayerBar.fillAmount = 0f;
 		actualPosition.text = "00:00";
 
-		FindObjectOfType<MetronomePro> ().Stop ();
+		MetronomeParent.Stop ();
 	}
 
 	// Next Song
@@ -193,21 +225,30 @@ public class MetronomePro_Player : MonoBehaviour {
 
 	// Update function is used to Update the Song Player Bar and Actual Position Text every frame and Player quick key buttons
 	void Update () {
+
 		if (active) {
 			if (playing) {
 				if (songAudioSource.isPlaying) {
 					amount = (songAudioSource.time) / (songAudioSource.clip.length);
 					songPlayerBar.fillAmount = amount;
-					actualPosition.text = UtilityMethods.FromSecondsToMinutesAndSeconds (songAudioSource.time);
+					actualPosition.text = UtilityMethods.FromSecondsToMinutesAndSeconds(songAudioSource.time);
 				} else {
-					StopSong ();
+					StopSong();
 				}
 			}
 		}
 
-		// Play song when user press Space button
-		if (Input.GetKeyDown(KeyCode.Space)) {
-			PlayOrPauseSong ();
+		KeyboardController();
+	}
+
+	[Diagnostics.Conditional("UNITY_EDITOR"), 
+	Diagnostics.Conditional("UNITY_STANDALONE"),
+	Diagnostics.Conditional("DEVELOPMENT_BUILD")]
+	public virtual void KeyboardController() {
+		// Play song when user press Space button (PC only)
+		if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.P))
+		{
+			PlayOrPauseSong();
 		}
 	}
 }

@@ -1,0 +1,27 @@
+// Follow the next tutorial to Play the Example Song (thanks to NoCopyrightSounds)
+// Created by Carlos Arturo Rodriguez Silva (Legend)
+
+// FOLOW THE VIDEO TUTORIAL: https://www.youtube.com/watch?v=YxVUJ3JttSk
+// Contact: ryolxgame@gmail.com
+
+// 1. Download the example song (Lenkus - Cetus) from here: 
+// Link: http://nocopyrightsounds.co.uk/video/lensko-cetus-ncs-release/
+// Direct Link: http://files-cdn.nocopyrightsounds.co.uk/Lensko%20-%20Cetus.mp3
+
+// 2. Import to Unity (drag and drop to Metronome Pro "Music" folder in Unity).
+
+// 3. Assign the downloaded Song to "Song Clip" variable in MetronomePro_Player script in Unity
+// (this script will be located in Hierachy > Canvas > MetronomePro UI > Player)
+
+// 4. Assign the Song Data for this song (you need to set your own values if you set another song):
+
+// Song Name: Cetus
+// Song Artist: Lensku
+
+// BPM: 128
+// Offset MS: 20
+
+// Step: 4
+// Base: 4
+
+// 5. Press Play!
