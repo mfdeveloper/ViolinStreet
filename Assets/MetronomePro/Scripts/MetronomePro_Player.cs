@@ -15,6 +15,7 @@ public class MetronomePro_Player : MonoBehaviour {
 
 	public AudioSource songAudioSource;
 	public Sprite playSprite;
+	public Sprite playStartedSprite;
 	public Sprite pauseSprite;
 
 	[Space (5)]
@@ -168,7 +169,7 @@ public class MetronomePro_Player : MonoBehaviour {
 			playing = false;
 			songAudioSource.Pause ();
 			MetronomeParent.Pause ();
-			playAndPauseButton.sprite = playSprite;
+			playAndPauseButton.sprite = playStartedSprite;
 
 		} else {
 			songAudioSource.Play ();

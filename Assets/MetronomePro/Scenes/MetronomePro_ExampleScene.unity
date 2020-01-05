@@ -498,6 +498,24 @@ PrefabInstance:
       propertyPath: iconMusicPlayer
       value: 
       objectReference: {fileID: 633308644}
+    - target: {fileID: 114052137994997970, guid: 7c8b053fff72f7c4dbec7eca2a6959e1,
+        type: 3}
+      propertyPath: playStartedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d390c98a79bda62458be7dd7bb6e6a08,
+        type: 3}
+    - target: {fileID: 114052137994997970, guid: 7c8b053fff72f7c4dbec7eca2a6959e1,
+        type: 3}
+      propertyPath: pauseStartedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d42d145ff53cbb546a83c73c18f9b9d3,
+        type: 3}
+    - target: {fileID: 114052137994997970, guid: 7c8b053fff72f7c4dbec7eca2a6959e1,
+        type: 3}
+      propertyPath: pauseSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d42d145ff53cbb546a83c73c18f9b9d3,
+        type: 3}
     - target: {fileID: 114211060059180530, guid: 7c8b053fff72f7c4dbec7eca2a6959e1,
         type: 3}
       propertyPath: OnBeat.m_PersistentCalls.m_Calls.Array.size
