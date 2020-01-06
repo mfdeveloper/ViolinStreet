@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,12 +9,19 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     protected float jumpForce = 3f;
+
     [SerializeField]
     protected GameObject attackShoot;
     [SerializeField]
-    protected float attackSpeed = 2f;
+    protected GameObject specialShoot;
+
+    [SerializeField]
+    [Tooltip("One shoot until that leaves of the camera view")]
+    protected bool oneShoot = false;
     [SerializeField]
     protected bool attackOnAir = true;
+    [SerializeField]
+    protected float attackSpeed = 2f;
 
     protected Rigidbody2D rigidBody;
     protected SpriteRenderer spriteRenderer;
@@ -69,30 +77,69 @@ public class Player : MonoBehaviour
     }
     public virtual void Inputs()
     {
-
+        // TODO: Refactor this and move this Inputs to C# events
+        // BUG: Tap is executed many times
         if (!EventSystem.current.IsPointerOverGameObject())
         {
-            if (InputManager.touch.IsScreenRight() && !inAir)
-            {
-                jumping = true;
-            }
+            TouchOrMouse.TouchTypeFlags touchFlags = InputManager.touch.TapOrSwipe();
 
-            if (InputManager.touch.IsScreendLeft() && attackShoot != null)
+            if (touchFlags.swipe && touchFlags.right)
             {
+                //Debug.Log("SPECIAAAAL");
+                SpawnShoot("special");
+                InputManager.touch.StopSwipe();
+            } else
+            {
+                var touchPosition = InputManager.touch.GetTapPosition(touchFlags);
 
-                if (!attackOnAir)
+                if (InputManager.touch.IsScreenRight(touchPosition) && !inAir)
                 {
-                    if (!inAir)
-                    {
-                        shoots.Add(Instantiate(attackShoot, transform));
-                    }
-                } else
+                    jumping = true;
+                }
+
+                if (InputManager.touch.IsScreenLeft(touchPosition))
                 {
-                    shoots.Add(Instantiate(attackShoot, transform));
+                    SpawnShoot();
                 }
             }
         }
 
+    }
+
+    public virtual void SpawnShoot(string type = "normal")
+    {
+        var shootPrefab = type.Equals("special") ? specialShoot : attackShoot;
+
+        if (shootPrefab == null)
+        {
+            return;
+        }
+
+        if (!attackOnAir)
+        {
+            if (!inAir)
+            {
+                if (oneShoot)
+                {
+                    if (shoots.Count == 0)
+                    {
+                        shoots.Add(Instantiate(shootPrefab, transform));
+                    }
+
+                }
+                else
+                {
+                    shoots.Add(Instantiate(shootPrefab, transform));
+                }
+            }
+        }
+        else
+        {
+            if (shoots.Count == 0)
+            {
+                shoots.Add(Instantiate(attackShoot, transform));
+            }
+        }
     }
 
     public virtual void Jump()
@@ -137,11 +184,20 @@ public class Player : MonoBehaviour
     /// <param name="player"></param>
     public virtual void ChangeColor(MetronomePro metronome, MetronomePro_Player player)
     {
-        
+
         if (transform.childCount > 0)
         {
             var child = transform.GetChild(0);
-            child.GetComponentInChildren<SpriteRenderer>().color = Random.ColorHSV(0f, 1f);
+
+            if (!child.name.Contains("Clone"))
+            {
+                var childSprite = child.GetComponentInChildren<SpriteRenderer>();
+
+                if (childSprite != null)
+                {
+                    childSprite.color = Random.ColorHSV(0f, 1f);
+                }
+            }
         } else if (spriteRenderer != null)
         {
             spriteRenderer.color = Random.ColorHSV(0f, 1f);

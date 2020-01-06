@@ -1000,8 +1000,11 @@ MonoBehaviour:
   jumpForce: 5
   attackShoot: {fileID: 8538581057602083370, guid: e87aa413de20a0248abe3d26aabb6feb,
     type: 3}
-  attackSpeed: 5
+  specialShoot: {fileID: 8773650125104894308, guid: 210ba0ec3d6008348bc1248d35f3dd41,
+    type: 3}
+  oneShoot: 0
   attackOnAir: 0
+  attackSpeed: 5
 --- !u!61 &1717736504
 BoxCollider2D:
   m_ObjectHideFlags: 0
