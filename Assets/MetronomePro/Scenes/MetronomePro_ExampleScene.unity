@@ -457,16 +457,16 @@ PrefabInstance:
         type: 3}
       propertyPath: songClip
       value: 
-      objectReference: {fileID: 8300000, guid: e6d4461484df37149aefdef1bd28dd47, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 114052137994997970, guid: 7c8b053fff72f7c4dbec7eca2a6959e1,
         type: 3}
       propertyPath: Step
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114052137994997970, guid: 7c8b053fff72f7c4dbec7eca2a6959e1,
         type: 3}
       propertyPath: Bpm
-      value: 100
+      value: 128
       objectReference: {fileID: 0}
     - target: {fileID: 114052137994997970, guid: 7c8b053fff72f7c4dbec7eca2a6959e1,
         type: 3}
@@ -476,17 +476,17 @@ PrefabInstance:
     - target: {fileID: 114052137994997970, guid: 7c8b053fff72f7c4dbec7eca2a6959e1,
         type: 3}
       propertyPath: songName
-      value: Violin
+      value: MetronomePro
       objectReference: {fileID: 0}
     - target: {fileID: 114052137994997970, guid: 7c8b053fff72f7c4dbec7eca2a6959e1,
         type: 3}
       propertyPath: songArtist
-      value: Tharcisio Vhaz
+      value: Unity
       objectReference: {fileID: 0}
     - target: {fileID: 114052137994997970, guid: 7c8b053fff72f7c4dbec7eca2a6959e1,
         type: 3}
       propertyPath: Base
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114052137994997970, guid: 7c8b053fff72f7c4dbec7eca2a6959e1,
         type: 3}

@@ -11,7 +11,16 @@ public class MetronomePro : MonoBehaviour {
 
 	[Serializable]
 	public class MetronomeEvent : UnityEvent<MetronomePro, MetronomePro_Player> {}
-	
+
+	[Serializable]
+	public class MetronomeEvents
+	{
+		public MetronomeEvent OnBeat = new MetronomeEvent();
+		public MetronomeEvent OnPlay = new MetronomeEvent();
+		public MetronomeEvent OnPause = new MetronomeEvent();
+		public MetronomeEvent OnStop = new MetronomeEvent();
+	}
+
 	[Header("Variables")]
 	public bool active = false;
 	[Tooltip("Plays the song and metronome when the game starts")]
@@ -63,12 +72,8 @@ public class MetronomePro : MonoBehaviour {
 
 	public bool neverPlayed = true;
 
-	[Header("Events")]
-	[Tooltip("Register events to call on each beat/step of the music")]
-	public MetronomeEvent OnBeat = new MetronomeEvent();
-	public MetronomeEvent OnPlay = new MetronomeEvent();
-	public MetronomeEvent OnPause = new MetronomeEvent();
-	public MetronomeEvent OnStop = new MetronomeEvent();
+	[Tooltip("Register events when something happens on Metronome (each beat, on play, on stop...)")]
+	public MetronomeEvents events;
 
 	protected MetronomePro_Player metronomePlayer;
 
@@ -78,6 +83,7 @@ public class MetronomePro : MonoBehaviour {
 	}
 
 	void Start() {
+
 		imgBeat1.color = Color.gray;
 		imgBeat2.color = Color.gray;
 		imgBeat3.color = Color.gray;
@@ -204,14 +210,14 @@ public class MetronomePro : MonoBehaviour {
 		neverPlayed = false;
 		active = true;
 
-		OnPlay.Invoke(this, metronomePlayer);
+		events.OnPlay.Invoke(this, metronomePlayer);
 	}
 
 	// Pause Metronome
 	public void Pause () {
 		active = false;
 
-		OnPause.Invoke(this, metronomePlayer);
+		events.OnPause.Invoke(this, metronomePlayer);
 	}
 
 	// Stop Metronome
@@ -222,7 +228,7 @@ public class MetronomePro : MonoBehaviour {
 		CurrentStep = 4;
 		CurrentTick = 0;
 
-		OnStop.Invoke(this, metronomePlayer);
+		events.OnStop.Invoke(this, metronomePlayer);
 	}
 
 	// Calculate Time Intervals for the song
@@ -342,7 +348,7 @@ public class MetronomePro : MonoBehaviour {
 
 
 		// YOUR FUNCTIONS HERE (try add callbacks to "OnBeat" event)
-		OnBeat.Invoke(this, metronomePlayer);
+		events.OnBeat.Invoke(this, metronomePlayer);
 
 		// Example 1
 		/*
