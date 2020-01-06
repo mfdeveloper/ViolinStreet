@@ -9,6 +9,8 @@ public class ParallaxSimple : MonoBehaviour
     [SerializeField]
     private ParallaxElement[] elements = { };
 
+    protected float originSpeed = 0f;
+
     // Update is called once per frame
     void Update()
     {
@@ -17,7 +19,7 @@ public class ParallaxSimple : MonoBehaviour
 
     public virtual void MoveElements()
     {
-        if (elements.Length > 0)
+        if (elements.Length > 0 && speed > 0)
         {
             foreach (var element in elements)
             {
@@ -25,5 +27,19 @@ public class ParallaxSimple : MonoBehaviour
                 element.Move(speed);
             }
         }
+    }
+
+    public virtual void Play()
+    {
+        if (originSpeed > 0f && originSpeed != speed)
+        {
+            speed = originSpeed;
+        }
+    }
+
+    public virtual void Stop()
+    {
+        originSpeed = speed;
+        speed = 0f;
     }
 }
