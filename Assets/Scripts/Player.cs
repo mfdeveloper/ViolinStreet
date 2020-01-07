@@ -23,6 +23,12 @@ public class Player : MonoBehaviour
     [SerializeField]
     protected float attackSpeed = 2f;
 
+    [Header("Rhythm Sync")]
+    [Space(4)]
+
+    [SerializeField]
+    protected MetronomePro metronomePro;
+
     protected Rigidbody2D rigidBody;
     protected SpriteRenderer spriteRenderer;
 
@@ -30,6 +36,15 @@ public class Player : MonoBehaviour
     protected bool isGrounded = false;
     protected bool inAir = false;
     protected List<GameObject> shoots = new List<GameObject>();
+
+    protected PlatformRhythm platformRhythm;
+
+    public PlatformRhythm PlatformJump
+    {
+        get { return platformRhythm; }
+        set { platformRhythm = value; }
+    }
+
 
     void Awake()
     {
@@ -45,6 +60,22 @@ public class Player : MonoBehaviour
         }
     }
 
+    void OnEnable()
+    {
+        if (metronomePro != null)
+        {
+            metronomePro.events.OnBeat.AddListener(ActionsRhythm);
+        }
+    }
+
+    void OnDisable()
+    {
+        if (metronomePro != null)
+        {
+            metronomePro.events.OnBeat.RemoveListener(ActionsRhythm);
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -53,7 +84,7 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        Jump();
+        //Jump();
 
         Attack();
     }
@@ -64,6 +95,11 @@ public class Player : MonoBehaviour
         {
             isGrounded = true;
             inAir = false;
+
+            if (PlatformJump != null)
+            {
+                PlatformJump = null;
+            }
         }
     }
 
@@ -147,6 +183,7 @@ public class Player : MonoBehaviour
         if (jumping && isGrounded)
         {
             //rigidBody.velocity = Vector2.zero;
+            PlatformJump.animatorController?.SetBool("disapear", true);
             rigidBody?.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             jumping = false;
         }
@@ -201,6 +238,22 @@ public class Player : MonoBehaviour
         } else if (spriteRenderer != null)
         {
             spriteRenderer.color = Random.ColorHSV(0f, 1f);
+        }
+    }
+
+    public virtual void ActionsRhythm(MetronomePro metronome, MetronomePro_Player player)
+    {
+        if (metronome.CurrentStep > 0 && metronome.CurrentStep <= player.Base )
+        {
+            if (PlatformJump != null)
+            {
+                
+
+                Jump();
+
+
+                //PlatformJump = null;
+            }
         }
     }
 }
