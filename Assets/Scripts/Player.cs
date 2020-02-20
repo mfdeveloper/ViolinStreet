@@ -38,6 +38,7 @@ public class Player : MonoBehaviour
     protected List<GameObject> shoots = new List<GameObject>();
 
     protected PlatformRhythm platformRhythm;
+    protected Color[] rhythmColors = new[] { Color.yellow, Color.white };
 
     public PlatformRhythm PlatformJump
     {
@@ -232,7 +233,10 @@ public class Player : MonoBehaviour
 
                 if (childSprite != null)
                 {
-                    childSprite.color = Random.ColorHSV(0f, 1f);
+                    if (metronome.CurrentStep > 0)
+                    {
+                        childSprite.color = rhythmColors[metronome.CurrentStep - 1]; // Random.ColorHSV(0f, 1f);
+                    }
                 }
             }
         } else if (spriteRenderer != null)
